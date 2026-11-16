@@ -1,3 +1,4 @@
 # PSP_Practica3
 Amador Moreno
-Mi portátil con MacOS 26.6.2
+PC 11
+Estoy usando mi portátil con MacOS 26.6.2 para la actividad.
