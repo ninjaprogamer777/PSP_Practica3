@@ -6,26 +6,21 @@ import java.time.format.DateTimeParseException;
 import Modelo.Cliente;
 import Modelo.GestorClientes;
 import Vista.PanelNuevoJPanel;
-import Vista.PanelVisualizar;
-import Vista.VistaClientes;
+import Vista.VerJPanel;
+import Vista.PrincipalJFrame;
 
 public class ControladorCliente {
 
     private final GestorClientes modelo;
-    private final VistaClientes vista;
+    private final PrincipalJFrame vista;
 
-    public ControladorCliente(GestorClientes modelo, VistaClientes vista) {
+    public ControladorCliente(GestorClientes modelo, PrincipalJFrame vista) {
         this.modelo = modelo;
         this.vista = vista;
 
-        PanelVisualizar panel = vista.getPanelVisualizar();
+        VerJPanel panel = vista.getPanelVisualizar();
         PanelNuevoJPanel panelNuevo = vista.getPanelNuevo();
-
-        panel.addPrimeroListener(e -> {
-            modelo.irPrimero();
-            mostrar();
-        });
-
+        
         panel.addAnteriorListener(e -> {
             modelo.retroceder();
             mostrar();
@@ -36,23 +31,13 @@ public class ControladorCliente {
             mostrar();
         });
 
-        panel.addUltimoListener(e -> {
-            modelo.irUltimo();
-            mostrar();
-        });
-
-        panel.addBorrarListener(e -> {
-            modelo.borrarActual();
-            mostrar();
-        });
-
         panelNuevo.addGuardarListener(e -> guardarCliente());
 
         mostrar();
     }
 
     private void mostrar() {
-        PanelVisualizar panel = vista.getPanelVisualizar();
+        VerJPanel panel = vista.getPanelVisualizar();
         Cliente c = modelo.getActual();
 
         int posicion = c == null ? 0 : modelo.getIndiceActual() + 1;

@@ -18,59 +18,20 @@ import java.time.format.DateTimeParseException;
 public class PanelNuevoJPanel extends javax.swing.JPanel {
     
     public PanelNuevoJPanel(GestorClientes g) {
-        this.gestor = gestor;
-        
-        // Configuración del diseño general del panel
-        setLayout(new BorderLayout(10, 10));
-
-        // Panel para el formulario con 5 filas y 2 columnas
-        JPanel formulario = new JPanel(new GridLayout(5, 2, 10, 10));
-
-        // Fila 1: Número
-        formulario.add(new JLabel("Número:"));
-        txtNumero = new JTextField();
-        formulario.add(txtNumero);
-        
-        // Fila 2: Nombre
-        formulario.add(new JLabel("Nombre:"));
-        txtNombre = new JTextField();
-        formulario.add(txtNombre);
-
-        // Fila 3: Puntos
-        formulario.add(new JLabel("Puntos:"));
-        txtPuntos = new JTextField();
-        formulario.add(txtPuntos);
-
-        // Fila 4: Fecha
-        formulario.add(new JLabel("Fecha (AAAA-MM-DD):"));
-        txtFecha = new JTextField();
-        formulario.add(txtFecha);
-
-        // Fila 5: Botón Guardar y JLabel de errores (rojo)
-        btnGuardar = new JButton("Guardar");
-        formulario.add(btnGuardar);
-
-        lblError = new JLabel(" ");
-        lblError.setForeground(Color.RED); // Apartado 3.2: Error en JLabel rojo
-        formulario.add(lblError);
-
-        // Añadir el formulario al centro del panel principal
-        add(formulario, BorderLayout.CENTER);
-
-        // AQUÍ ESTÁ EL BOTÓN: Asociamos la acción al hacer clic en el JButton
-        btnGuardar.addActionListener(e -> guardarCliente());
+        initComponents();
+        this.gestor = g;
     }
 
     // Lógica que se ejecuta al pulsar el botón "Guardar"
     private void guardarCliente() {
         try {
-            // 1. Recoger y parsear los valores introducidos
-            int numero = Integer.parseInt(txtNumero.getText());
-            String nombre = txtNombre.getText();
-            float puntos = Float.parseFloat(txtPuntos.getText());
-            LocalDate fecha = LocalDate.parse(txtFecha.getText());
+            // Recoger y parsear los valores introducidos
+            int numero = Integer.parseInt(jTextField1.getText());
+            String nombre = jTextField2.getText();
+            float puntos = Float.parseFloat(jTextField4.getText());
+            LocalDate fecha = LocalDate.parse(jTextField3.getText());
 
-            // 2. Validar con tu clase estática ControlErrores (Apartado 3.2)
+            // Validar con tu clase estática ControlErrores
             if (!ControlErrores.comprobarNombre(nombre)) {
                 mostrarError("Error: El nombre no puede estar vacío.");
                 return;
@@ -84,12 +45,11 @@ public class PanelNuevoJPanel extends javax.swing.JPanel {
                 return;
             }
 
-            // 3. Si todo es correcto, crear el cliente y añadirlo al gestor
+            // Si todo es correcto, crear el cliente y añadirlo al gestor
             Cliente nuevo = new Cliente(numero, nombre, puntos, fecha);
             gestor.anadir(nuevo);
 
-            // Mensaje de éxito (en verde)
-            mostrarCorrecto("¡Cliente guardado con éxito!");
+            mostrarCorrecto("Cliente guardado");
             limpiar();
 
         } catch (NumberFormatException ex) {
@@ -121,20 +81,18 @@ public class PanelNuevoJPanel extends javax.swing.JPanel {
 
     // Métodos auxiliares para mostrar mensajes en la interfaz
     public void mostrarError(String mensaje) {
-        lblError.setForeground(Color.RED); // Forzar color rojo para errores
-        lblError.setText(mensaje);
+        JOptionPane.showMessageDialog(this, mensaje, "Error de validación", JOptionPane.ERROR_MESSAGE);
     }
 
     public void mostrarCorrecto(String mensaje) {
-        lblError.setForeground(new Color(0, 130, 0)); // Verde para éxito
-        lblError.setText(mensaje);
+        JOptionPane.showMessageDialog(this, mensaje, "Cliente agregado correctamente", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void limpiar() {
-        txtNumero.setText("");
-        txtNombre.setText("");
-        txtPuntos.setText("");
-        txtFecha.setText("");
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField4.setText("");
+        jTextField3.setText("");
     
     }
 
@@ -156,82 +114,84 @@ public class PanelNuevoJPanel extends javax.swing.JPanel {
         jTextField4 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabelAltaCliente = new javax.swing.JLabel();
 
         jLabel1.setText("Número:");
 
         jButton1.setText("Aceptar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jTextField1.setText("jTextField1");
-
         jLabel2.setText("Nombre:");
 
-        jTextField2.setText("jTextField2");
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
 
-        jTextField3.setText("jTextField4");
         jTextField3.addActionListener(this::jTextField3ActionPerformed);
 
-        jTextField4.setText("jTextField3");
         jTextField4.addActionListener(this::jTextField4ActionPerformed);
 
         jLabel3.setText("Puntos:");
 
         jLabel4.setText("Fecha Nac:");
 
+        jLabelAltaCliente.setText("Alta Cliente");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(163, 163, 163)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
+                        .addComponent(jLabelAltaCliente)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelAltaCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
                 .addComponent(jButton1)
                 .addGap(56, 56, 56))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        lblError.setForeground(Color.RED);
+        guardarCliente();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -262,6 +222,7 @@ public class PanelNuevoJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelAltaCliente;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

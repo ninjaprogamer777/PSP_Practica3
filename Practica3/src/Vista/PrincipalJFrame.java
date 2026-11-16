@@ -19,18 +19,22 @@ public class PrincipalJFrame extends javax.swing.JFrame {
      * Creates new form PrincipalJFrame
      */
     public PrincipalJFrame() {
+        // Inicializamos el gestor y metemos unos cuantos clientes de prueba
         clientes = new GestorClientes();
         clientes.anadir(new Cliente (1, "Amador Moreno", 250, LocalDate.of(1995, 5, 10)));
         clientes.anadir(new Cliente (2, "Adán Morales", 500, LocalDate.of(2001, 7, 14)));
         clientes.anadir(new Cliente (3, "Enrique Apellido", 900, LocalDate.of(2004, 1, 3)));
         
         initComponents();
+        
+        // Creamos los paneles pasándoles la misma instancia de clientes para compartir los datos
         pVer = new VerJPanel(clientes);
-        pAlta = new PanelNuevoJPanel(new GestorClientes());
+        pAlta = new PanelNuevoJPanel(clientes);
         
         setResizable(false);
         setLocationRelativeTo(null);
         
+        // Cerramos la aplicación al pulsar la opción de salir del menú
         jMenuSalir.addActionListener(evt -> System.exit(0));
     }
     
@@ -124,6 +128,14 @@ public class PrincipalJFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new PrincipalJFrame().setVisible(true));
+    }
+    
+    public VerJPanel getPanelVisualizar() {
+        return pVer;
+    }
+
+    public PanelNuevoJPanel getPanelNuevo() {
+        return pAlta;
     }
     
     private VerJPanel pVer;
